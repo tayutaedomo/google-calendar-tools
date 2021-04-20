@@ -28,6 +28,9 @@ settings.json
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.lintOnSave": true,
-  "python.formatting.provider": "autopep8"
+  "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+    "--ignore E402"
+  ]
 }
 ```
