@@ -27,7 +27,22 @@ settings.json
   "editor.formatOnSave": true,
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+    "--ignore=E111, E114, E402, E501"
+  ],
   "python.linting.lintOnSave": true,
-  "python.formatting.provider": "autopep8"
+  "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+    "--indent-size=2",
+    "--ignore E402"
+  ]
 }
+```
+
+## Scripts
+
+```
+$ python scripts/quickstart.py
+$ python scripts/calendar_list.py
+$ python scripts/event_list.py "Calendar ID" "2021-04-01T00:00:00Z" "2021-05-01T00:00:00Z"
 ```
