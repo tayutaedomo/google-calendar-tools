@@ -34,3 +34,10 @@ settings.json
   ]
 }
 ```
+
+## Scripts
+
+```
+$ python scripts/quickstart.py
+$ python scripts/calendar_list.py
+```
