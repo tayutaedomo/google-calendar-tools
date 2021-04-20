@@ -130,3 +130,4 @@ dmypy.json
 
 
 .vscode
+etc/google-cloud/*.json
