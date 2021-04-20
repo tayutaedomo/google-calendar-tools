@@ -44,4 +44,5 @@ settings.json
 ```
 $ python scripts/quickstart.py
 $ python scripts/calendar_list.py
+$ python scripts/event_list.py "Calendar ID" "2021-04-01T00:00:00Z" "2021-05-01T00:00:00Z"
 ```
