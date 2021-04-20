@@ -27,9 +27,13 @@ settings.json
   "editor.formatOnSave": true,
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+    "--ignore=E111, E114, E402, E501"
+  ],
   "python.linting.lintOnSave": true,
   "python.formatting.provider": "autopep8",
     "python.formatting.autopep8Args": [
+    "--indent-size=2",
     "--ignore E402"
   ]
 }
