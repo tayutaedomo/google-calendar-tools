@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from utils.api import fetch_events
 
 
@@ -14,11 +16,12 @@ class Events:
     for obj in self.items:
       item = EventItem(obj)
 
-      csv_line = '"{}","{}","{}","{}"'.format(
+      csv_line = '"{}","{}","{}","{}","{}"'.format(
           item.get_summary(),
           '1' if item.is_all_day() else '0',
           item.get_start(),
-          item.get_end()
+          item.get_end(),
+          item.get_total_minitues()
       )
 
       with open(filename, 'a') as f:
@@ -96,3 +99,11 @@ class EventItem:
       return dt
 
     return ''
+
+  def get_total_minitues(self):
+    if self.is_all_day():
+      return 0
+
+    start = datetime.fromisoformat(self.get_start_datetime())
+    end = datetime.fromisoformat(self.get_end_datetime())
+    return (end - start).total_seconds() / 60
