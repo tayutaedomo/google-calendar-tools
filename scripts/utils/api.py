@@ -29,3 +29,8 @@ def get_calendar_service(scopes=SCOPES):
             pickle.dump(creds, token)
 
     return build('calendar', 'v3', credentials=creds)
+
+
+def fetch_events(params):
+  service = get_calendar_service()
+  return service.events().list(**params).execute()
