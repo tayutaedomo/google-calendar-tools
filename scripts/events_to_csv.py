@@ -23,7 +23,6 @@ def main():
       'calendarId': sys.argv[1],
       'timeMin': sys.argv[2],
       'timeMax': sys.argv[3],
-      'maxResults': 50,
   }
 
   if len(sys.argv) > 4:

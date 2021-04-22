@@ -8,8 +8,22 @@ class Events:
     self.items = []
 
   def fetch(self, params):
-    events = fetch_events(params)
-    self.items = events['items']
+    self.items = []
+
+    params['pageToken'] = None
+
+    while True:
+      events = fetch_events(params)
+
+      if events and events.get('items'):
+        self.items.extend(events.get('items'))
+
+      page_token = events.get('nextPageToken')
+
+      if not page_token:
+        params['pageToken'] = page_token
+        break
+
     return self.items
 
   def to_csv(self, filename):
