@@ -49,6 +49,9 @@ class EventItem:
   def get_summary(self):
     return self.item.get('summary')
 
+  def has_start(self):
+    return self.item.get('start') is not None
+
   def get_start(self):
     d = self.get_start_date()
     if d != '':
@@ -115,7 +118,7 @@ class EventItem:
     return ''
 
   def get_total_minitues(self):
-    if self.is_all_day():
+    if not self.has_start() or self.is_all_day():
       return 0
 
     start = datetime.fromisoformat(self.get_start_datetime())
