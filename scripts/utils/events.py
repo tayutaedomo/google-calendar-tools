@@ -30,6 +30,9 @@ class Events:
     for obj in self.items:
       item = EventItem(obj)
 
+      if item.is_cancelled():
+        continue
+
       csv_line = '"{}","{}","{}","{}","{}"'.format(
           item.get_summary(),
           '1' if item.is_all_day() else '0',
@@ -45,6 +48,9 @@ class Events:
 class EventItem:
   def __init__(self, item):
     self.item = item
+
+  def is_cancelled(self) -> bool:
+    return self.item.get('status') == 'cancelled'
 
   def get_summary(self):
     return self.item.get('summary')
