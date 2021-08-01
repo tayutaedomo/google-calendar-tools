@@ -30,6 +30,9 @@ class Events:
     for obj in self.items:
       item = EventItem(obj)
 
+      if item.is_cancelled():
+        continue
+
       csv_line = '"{}","{}","{}","{}","{}"'.format(
           item.get_summary(),
           '1' if item.is_all_day() else '0',
@@ -46,8 +49,14 @@ class EventItem:
   def __init__(self, item):
     self.item = item
 
+  def is_cancelled(self) -> bool:
+    return self.item.get('status') == 'cancelled'
+
   def get_summary(self):
     return self.item.get('summary')
+
+  def has_start(self):
+    return self.item.get('start') is not None
 
   def get_start(self):
     d = self.get_start_date()
@@ -115,7 +124,7 @@ class EventItem:
     return ''
 
   def get_total_minitues(self):
-    if self.is_all_day():
+    if not self.has_start() or self.is_all_day():
       return 0
 
     start = datetime.fromisoformat(self.get_start_datetime())
