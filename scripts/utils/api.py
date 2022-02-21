@@ -32,5 +32,10 @@ def get_calendar_service(scopes=SCOPES):
 
 
 def fetch_events(params):
-  service = get_calendar_service()
-  return service.events().list(**params).execute()
+    service = get_calendar_service()
+    return service.events().list(**params).execute()
+
+
+def insert_event(params):
+    service = get_calendar_service()
+    return service.events().insert(**params).execute()
