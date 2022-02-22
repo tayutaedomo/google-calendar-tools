@@ -1,8 +1,12 @@
-import pickle
+from __future__ import annotations
+
 import os.path
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
+import pickle
+from typing import Any
+
 from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
 
 SCOPES = [
     'https://www.googleapis.com/auth/calendar.readonly',
@@ -39,6 +43,6 @@ def fetch_events(params):
     return service.events().list(**params).execute()
 
 
-def insert_event(params):
+def insert_event(params) -> Any:
     service = get_calendar_service()
     return service.events().insert(**params).execute()
