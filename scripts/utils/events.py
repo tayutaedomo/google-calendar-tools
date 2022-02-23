@@ -1,6 +1,11 @@
-from datetime import datetime
+from __future__ import annotations
 
-from .google_api import fetch_events
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Any
+
+from .date_util import date_range
+from .google_api import fetch_events, insert_event
 
 
 class Events:
@@ -130,3 +135,45 @@ class EventItem:
         start = datetime.fromisoformat(self.get_start_datetime())
         end = datetime.fromisoformat(self.get_end_datetime())
         return (end - start).total_seconds() / 60
+
+
+@dataclass
+class CreateEventsInput:
+    calendar_id: str
+    summary: str
+    from_date: str
+    to_date: str
+    start_time: str
+    end_time: str
+    weekday: bool = False
+
+
+def create_events(input_: CreateEventsInput) -> list[Any]:
+    def create_datetime_str(date_, time_str):
+        return f"{date_}T{time_str}+0900"
+
+    responses = []
+
+    for date_ in date_range(input_.from_date, input_.to_date):
+        start_datetime_str = create_datetime_str(date_, input_.start_time)
+        end_datetime_str = create_datetime_str(date_, input_.end_time)
+
+        if input_.weekday and date_.isoweekday() in {6, 7}:
+            continue
+
+        params = {
+            "calendarId": input_.calendar_id,
+            "body": {
+                "summary": input_.summary,
+                "start": {
+                    "dateTime": start_datetime_str,
+                },
+                "end": {
+                    "dateTime": end_datetime_str,
+                },
+            },
+        }
+        response = insert_event(params)
+        responses.append(response)
+
+    return responses
