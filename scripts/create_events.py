@@ -5,7 +5,7 @@ import datetime
 from dataclasses import dataclass
 from typing import Any
 
-from utils.api import insert_event
+from .utils.api import insert_event
 
 
 @dataclass
