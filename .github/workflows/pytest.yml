@@ -21,4 +21,4 @@ jobs:
         with:
           requirements: requirements.txt
       - name: Run Tests
-        run: pytest test/
+        run: pytest tests
