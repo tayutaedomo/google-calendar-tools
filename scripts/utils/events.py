@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from .date_util import date_range
-from .google_api import fetch_events, insert_event
+from utils.date_util import date_range
+from utils.google_api import fetch_events, insert_event
 
 
 class Events:
