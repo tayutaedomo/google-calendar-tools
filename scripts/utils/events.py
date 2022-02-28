@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+from logging import getLogger
 from typing import Any
 
 from utils.date_util import date_range
 from utils.google_api import fetch_events, insert_event
+
+logger = getLogger(__name__)
 
 
 class Events:
@@ -13,21 +16,32 @@ class Events:
         self.items = []
 
     def fetch(self, params):
+        loop_count = 1
         self.items = []
 
         params["pageToken"] = None
 
         while True:
-            events = fetch_events(params)
+            response = fetch_events(params)
 
-            if events and events.get("items"):
-                self.items.extend(events.get("items"))
+            if response and response.get("items"):
+                self.items.extend(response.get("items"))
 
-            page_token = events.get("nextPageToken")
+            page_token = response.get("nextPageToken")
 
             if not page_token:
                 params["pageToken"] = page_token
                 break
+
+            if loop_count > 20:
+                break
+
+            if loop_count % 5 == 0:
+                logger.info(f"Fetching. items:{len(self.items)}, loop:{loop_count}")
+
+            loop_count += 1
+
+        logger.info(f"Fetched. items:{len(self.items)}, loop:{loop_count}")
 
         return self.items
 
