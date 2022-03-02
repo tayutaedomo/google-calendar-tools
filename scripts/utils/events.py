@@ -188,6 +188,10 @@ def create_events(input_: CreateEventsInput) -> list[Any]:
             },
         }
         response = insert_event(params)
+        logger.info(
+            f"Created. {input_.summary}, {start_datetime_str}, {end_datetime_str}"
+        )
+
         responses.append(response)
 
     return responses

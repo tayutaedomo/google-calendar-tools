@@ -9,6 +9,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__)))
 
 from utils.events import CreateEventsInput, create_events
+from utils.logging import setup_logger
 
 
 def main() -> None:
@@ -40,12 +41,6 @@ def parse_args():
     parser.add_argument("--weekday", action="store_true", help="Weekday only")
 
     return parser.parse_args()
-
-
-def setup_logger(level=logging.INFO) -> None:
-    logging.basicConfig(level=logging.INFO)
-    log_format = "%(levelname)s %(asctime)s - %(message)s"
-    logging.basicConfig(stream=sys.stdout, format=log_format, level=level)
 
 
 if __name__ == "__main__":
