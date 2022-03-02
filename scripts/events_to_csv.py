@@ -5,12 +5,11 @@ import argparse
 import os
 import sys
 from datetime import datetime
-from json import load
-from logging import config
 
 sys.path.append(os.path.join(os.path.dirname(__file__)))
 
 from utils.events import Events
+from utils.logging import setup_logger
 
 
 def main():
@@ -48,12 +47,6 @@ def parse_args():
     parser.add_argument("--keyword", type=str, help="Query keyword")
 
     return parser.parse_args()
-
-
-def setup_logger() -> None:
-    config_path = os.path.join(os.path.dirname(__file__), "config", "logging.json")
-    with open(config_path, "r", encoding="utf-8") as f:
-        config.dictConfig(load(f))
 
 
 if __name__ == "__main__":
