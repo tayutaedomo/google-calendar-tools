@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 import argparse
-import logging
 import os
 import sys
 from datetime import datetime
+from json import load
+from logging import config
 
 sys.path.append(os.path.join(os.path.dirname(__file__)))
 
@@ -49,10 +50,10 @@ def parse_args():
     return parser.parse_args()
 
 
-def setup_logger(level=logging.INFO) -> None:
-    logging.basicConfig(level=logging.INFO)
-    log_format = "%(levelname)s %(asctime)s - %(message)s"
-    logging.basicConfig(stream=sys.stdout, format=log_format, level=level)
+def setup_logger() -> None:
+    config_path = os.path.join(os.path.dirname(__file__), "config", "logging.json")
+    with open(config_path, "r", encoding="utf-8") as f:
+        config.dictConfig(load(f))
 
 
 if __name__ == "__main__":
