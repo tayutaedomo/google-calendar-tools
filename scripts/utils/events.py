@@ -8,7 +8,7 @@ from typing import Any
 from utils.date_util import date_range
 from utils.google_api import fetch_events, insert_event
 
-logger = getLogger(__name__)
+logger = getLogger("calendartools." + __name__)
 
 
 class Events:
