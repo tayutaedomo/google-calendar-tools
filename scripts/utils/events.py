@@ -12,10 +12,10 @@ logger = getLogger(__name__)
 
 
 class Events:
-    def __init__(self):
-        self.items = []
+    def __init__(self) -> None:
+        self.items: list[EventItem] = []
 
-    def fetch(self, params):
+    def fetch(self, params) -> list[EventItem]:
         loop_count = 1
         self.items = []
 
@@ -45,7 +45,7 @@ class Events:
 
         return self.items
 
-    def to_csv(self, filename):
+    def to_csv(self, filename) -> None:
         for obj in self.items:
             item = EventItem(obj)
 
@@ -65,26 +65,26 @@ class Events:
 
 
 class EventItem:
-    def __init__(self, item):
+    def __init__(self, item) -> None:
         self.item = item
 
     def is_cancelled(self) -> bool:
         return self.item.get("status") == "cancelled"
 
-    def get_summary(self):
-        return self.item.get("summary")
+    def get_summary(self) -> str:
+        return self.item.get("summary", "")
 
-    def has_start(self):
+    def has_start(self) -> bool:
         return self.item.get("start") is not None
 
-    def get_start(self):
+    def get_start(self) -> str:
         d = self.get_start_date()
         if d != "":
             return d
 
         return self.get_start_datetime()
 
-    def get_start_date(self):
+    def get_start_date(self) -> str:
         start = self.item.get("start")
 
         if not start:
@@ -96,7 +96,7 @@ class EventItem:
 
         return ""
 
-    def get_start_datetime(self):
+    def get_start_datetime(self) -> str:
         start = self.item.get("start")
 
         if not start:
@@ -108,17 +108,17 @@ class EventItem:
 
         return ""
 
-    def is_all_day(self):
+    def is_all_day(self) -> bool:
         return self.get_start_date() != ""
 
-    def get_end(self):
+    def get_end(self) -> str:
         d = self.get_end_date()
         if d != "":
             return d
 
         return self.get_end_datetime()
 
-    def get_end_date(self):
+    def get_end_date(self) -> str:
         end = self.item.get("end")
 
         if not end:
@@ -130,7 +130,7 @@ class EventItem:
 
         return ""
 
-    def get_end_datetime(self):
+    def get_end_datetime(self) -> str:
         end = self.item.get("end")
 
         if not end:
@@ -142,9 +142,9 @@ class EventItem:
 
         return ""
 
-    def get_total_minitues(self):
+    def get_total_minitues(self) -> float:
         if not self.has_start() or self.is_all_day():
-            return 0
+            return 0.0
 
         start = datetime.fromisoformat(self.get_start_datetime())
         end = datetime.fromisoformat(self.get_end_datetime())
