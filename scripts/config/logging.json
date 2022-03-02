@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "handlers": {
+        "consoleHandler": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "consoleFormatter",
+            "stream": "ext://sys.stdout"
+        }
+    },
+    "formatters": {
+        "consoleFormatter": {
+            "format": "%(asctime)s|%(levelname)s|%(name)s|%(funcName)s|%(message)s"
+        }
+    },
+    "loggers": {
+        "calendartools": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ]
+        }
+    }
+}

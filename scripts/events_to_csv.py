@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import logging
 import os
 import sys
 from datetime import datetime
@@ -10,6 +9,7 @@ from datetime import datetime
 sys.path.append(os.path.join(os.path.dirname(__file__)))
 
 from utils.events import Events
+from utils.logging import setup_logger
 
 
 def main():
@@ -47,12 +47,6 @@ def parse_args():
     parser.add_argument("--keyword", type=str, help="Query keyword")
 
     return parser.parse_args()
-
-
-def setup_logger(level=logging.INFO) -> None:
-    logging.basicConfig(level=logging.INFO)
-    log_format = "%(levelname)s %(asctime)s - %(message)s"
-    logging.basicConfig(stream=sys.stdout, format=log_format, level=level)
 
 
 if __name__ == "__main__":
