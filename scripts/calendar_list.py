@@ -1,9 +1,10 @@
+# isort:skip_file
 import os
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__)))
 
-from utils.api import get_calendar_service
+from utils.google_api import get_calendar_service
 
 
 def main():
@@ -14,15 +15,15 @@ def main():
     while True:
         calendar_list = service.calendarList().list(pageToken=page_token).execute()
 
-        for item in calendar_list['items']:
+        for item in calendar_list["items"]:
             # print(item)
-            print(item['summary'], item['id'])
+            print(item["summary"], item["id"])
 
-        page_token = calendar_list.get('nextPageToken')
+        page_token = calendar_list.get("nextPageToken")
 
         if not page_token:
             break
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,18 +1,22 @@
+# isort:skip_file
 # Refer: https://qiita.com/lobmto/items/c1a220a12ec9c1fad560
 
 from __future__ import print_function
+
+import datetime
 import os
 import sys
-import datetime
+
+sys.path.append(os.path.join(os.path.dirname(__file__)))
+
+from utils.google_api import get_calendar_service
+
 # import pickle
 # import os.path
 # from googleapiclient.discovery import build
 # from google_auth_oauthlib.flow import InstalledAppFlow
 # from google.auth.transport.requests import Request
 
-sys.path.append(os.path.join(os.path.dirname(__file__)))
-
-from utils.api import get_calendar_service
 
 # # If modifying these scopes, delete the file token.pickle.
 # SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
@@ -49,19 +53,27 @@ def main():
     service = get_calendar_service()
 
     # Call the Calendar API
-    now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
-    events_result = service.events().list(calendarId='primary', timeMin=now,
-                                          maxResults=10, singleEvents=True,
-                                          orderBy='startTime').execute()
-    events = events_result.get('items', [])
+    now = datetime.datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
+    print("Getting the upcoming 10 events")
+    events_result = (
+        service.events()
+        .list(
+            calendarId="primary",
+            timeMin=now,
+            maxResults=10,
+            singleEvents=True,
+            orderBy="startTime",
+        )
+        .execute()
+    )
+    events = events_result.get("items", [])
 
     if not events:
-        print('No upcoming events found.')
+        print("No upcoming events found.")
     for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
+        start = event["start"].get("dateTime", event["start"].get("date"))
+        print(start, event["summary"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
